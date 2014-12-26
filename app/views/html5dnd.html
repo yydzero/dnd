@@ -1,0 +1,96 @@
+<div id="columns">
+  <div class="column" draggable="true"><header>A</header><div class="count" data-col-moves="0"></div></div>
+  <div class="column" draggable="true"><header>B</header><div class="count" data-col-moves="0"></div></div>
+  <div class="column" draggable="true"><header>C</header><div class="count" data-col-moves="0"></div></div>
+</div>
+
+<div id="empty">
+
+</div>
+
+<script>
+  var dragSrcEl = null;
+
+  function handleDragStart(e) {
+//      console.log("drag started: ")
+//      console.log(e);
+      this.style.opacity = '0.4';   // this / e.target is the source node.
+
+      dragSrcEl = this;
+
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', this.innerHTML);
+  }
+
+  function handleDragOver(e) {
+//      console.log("dragover event");
+//      console.log(e);
+      if (e.preventDefault) {
+          e.preventDefault();     // necessary, allows us to drop
+      }
+
+      e.dataTransfer.dropEffect = 'move';
+      return false;
+  }
+
+  function handleDragEnter(e) {
+      console.log("drag enter event");
+      console.log(e);
+      // this/e.target is the current hover target
+      this.classList.add('over');
+  }
+
+  function handleDragLeave(e) {
+    // this/e.target is previous target element
+    console.log("drag leave event");
+    console.log(e);
+    this.classList.remove('over');
+  }
+
+  function handleDrop(e) {
+    console.log("drop event");
+    console.log(e);
+
+    // this/e.target is current target element
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    }
+
+    // Don't do anything if dropping the same column we're dragging.
+    if (dragSrcEl != this) {
+      // Set the source column's HTML to the HTML of the column we dropped on
+      dragSrcEl.innerHTML = this.innerHTML;
+      this.innerHTML = e.dataTransfer.getData('text/html');
+
+      // Set number of times the column has been moved.
+      var count = this.querySelector('.count');
+      var newCount = parseInt(count.getAttribute('data-col-moves')) + 1;
+      count.setAttribute('data-col-moves', newCount);
+      count.textContent = 'moves: ' + newCount;
+    }
+
+    return false;
+  }
+
+  function handleDragEnd(e) {
+      console.log("drag end event");
+      console.log(e);
+      // this / e.target is the source node.
+      [].forEach.call(cols, function(col) {
+          col.classList.remove('over');
+      });
+      this.style.opacity = '1.0';
+  }
+
+
+  var cols = document.querySelectorAll('#columns .column');
+
+  [].forEach.call(cols, function(col) {
+      col.addEventListener('dragstart', handleDragStart, false);
+      col.addEventListener('dragenter', handleDragEnter, false);
+      col.addEventListener('dragover', handleDragOver, false);
+      col.addEventListener('dragleave', handleDragLeave, false);
+      col.addEventListener('drop', handleDrop, false);
+      col.addEventListener('dragend', handleDragEnd, false);
+  });
+</script>

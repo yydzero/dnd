@@ -27,6 +27,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/html5dnd', {
+        templateUrl: 'views/html5dnd.html',
+        controller: 'Html5DndCtrl'
+      })
       .when('/simplednd', {
         templateUrl: 'views/simplednd.html',
         controller: 'SimpleDndCtrl'
