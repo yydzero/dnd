@@ -1,16 +1,16 @@
-angular.module('dndApp').directive('draggable', function () {
-    var handleDragStart = function (e) {
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('Text', this.id);
-        this.classList.add('drag');
-        return false;
-    };
-    var handleDragEnd = function (e) {
-        this.classList.remove('drag');
-        return false;
-    };
-
+angular.module('dndApp').directive('draggable1', function () {
     return function (scope, element) {
+        var handleDragStart = function (e) {
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('Text', this.id);
+            this.classList.add('drag');
+            return false;
+        };
+        var handleDragEnd = function (e) {
+            this.classList.remove('drag');
+            return false;
+        };
+
         // this gives us the native JS object
         var el = element[0];
         el.draggable = true;      // set draggable attribute as true which is required by HTML 5 DnD
@@ -20,7 +20,7 @@ angular.module('dndApp').directive('draggable', function () {
         el.addEventListener('dragstart', handleDragStart, false);
         el.addEventListener('dragend',   handleDragEnd, false);
     }
-}).directive('droppable', function () {
+}).directive('droppable1', function () {
 
     var handleDragOver = function (e) {
         e.dataTransfer.dropEffect = "move";
@@ -44,7 +44,8 @@ angular.module('dndApp').directive('draggable', function () {
 
     return {
         scope: {
-            drop: '&'       // parent
+            drop: '&',       // parent
+            bin:  '='        // bi-directional scope
         },
         link: function (scope, element) {
 
@@ -53,11 +54,18 @@ angular.module('dndApp').directive('draggable', function () {
                 // stops some browsers from redirecting.
                 if (e.stopPropagation) e.stopPropagation();
                 this.classList.remove('over');
+
+                var binId = this.id;
                 var item = document.getElementById(e.dataTransfer.getData('Text'));
                 this.appendChild(item);
 
                 // call the drop passed drop function
-                scope.$apply('drop()');
+                scope.$apply(function(scope) {
+                    var fn = scope.drop();
+                    if ('undefined' !== typeof fn) {
+                        fn(item.id, binId);
+                    }
+                });
 
                 return false;
             };
@@ -69,8 +77,8 @@ angular.module('dndApp').directive('draggable', function () {
             el.addEventListener('drop',      handleDrop, false);
         }
     }
-}).controller('SimpleDndCtrl', function ($scope) {
-    $scope.handleDrop = function () {
-        alert('Item has been dropped');
+}).controller('NgrepeatDndCtrl', function ($scope) {
+    $scope.handleDrop = function (item, bin) {
+        alert('Item ' + item + ' has been dropped into ' + bin);
     }
 });
