@@ -1,5 +1,6 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
 .browsehappy {
@@ -88,4 +89,20 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+
+.item {
+  min-height: 150px;
+  min-width: 150px;
+  background: blue;
+  float: right;
+}
+
+.bin {
+  min-height: 150px;
+  min-width: 150px;
+  float: left;
+  border: 1px solid red;
+  padding: 20px;
 }
