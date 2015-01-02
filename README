@@ -1,0 +1,4 @@
+
+
+depends on angular-draganddrop module, while it has a bug which will not always
+retrieve latest draggableData. 
