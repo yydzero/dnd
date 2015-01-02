@@ -1,0 +1,22 @@
+
+
+.left {
+    float: left;
+    min-width: 250px;
+    background-color: #00b3ee;
+
+    margin: 10px;
+}
+
+.right {
+    float: left;
+    min-width: 250px;
+    background-color: #009900;
+
+    margin: 10px;
+}
+
+.myrow {
+    padding: 4px;
+    border: solid;
+}

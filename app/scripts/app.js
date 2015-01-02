@@ -15,7 +15,8 @@ angular
         'ngResource',
         'ngRoute',
         'ngSanitize',
-        'ngTouch'
+        'ngTouch',
+        'draganddrop'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -38,6 +39,10 @@ angular
             .when('/ngrepeatdnd', {
                 templateUrl: 'views/ngrepeatdnd.html',
                 controller: 'NgrepeatDndCtrl'
+            })
+            .when('/angulardnd', {
+                templateUrl: 'views/angulardnd.html',
+                controller: 'AngularDnDCtrl'
             })
             .otherwise({
                 redirectTo: '/'

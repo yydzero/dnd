@@ -1,0 +1,48 @@
+<p>Use angular draganddrop module</p>
+
+<div ng-controller="AngularDnDCtrl">
+
+    <!-- Draggable element. -->
+    <div class="left">
+        <div class="myrow" id="lrow{{item.id}}" index="{{$index}}"
+             ng-repeat="item in leftItems"
+             panel="left"
+             ng-if="item.panel == 'left'"
+             draggable="true"
+             effect-allowed="copy"
+             draggable-type="custom-object"
+             draggable-data="{ id: '{{item.id}}', index: '{{$index}}', panel: 'left' }"
+
+             drop="onDrop($data, $event)"
+             drop-effect="copy"
+             drop-accept="'json/custom-object'"
+             drag-over="onDragOver($event)"
+             drag-over-class="drag-over-accept"
+            >
+            left panel: item {{item.id}}
+        </div>
+    </div>
+
+    <!-- Dropzone element. -->
+    <div class="right">
+        <div class="myrow" id="rrow{{item.id}}" index="{{$index}}"
+             ng-repeat="item in rightItems"
+             panel="right"
+
+             draggable="true"
+             effect-allowed="copy"
+             draggable-type="custom-object"
+             draggable-data="{ id: '{{item.id}}', index: '{{$index}}', panel: 'right' }"
+
+             ng-if="item.panel == 'right'"
+             drop="onDrop($data, $event)"
+             drop-effect="copy"
+             drop-accept="'json/custom-object'"
+             drag-over="onDragOver($event)"
+             drag-over-class="drag-over-accept">
+            right panel: item {{item.id}}
+        </div>
+    </div>
+
+
+</div>

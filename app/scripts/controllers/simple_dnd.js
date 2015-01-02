@@ -1,3 +1,7 @@
+
+// TODO: use bind instead of addEventListener, as bind is more neutral and efficient across browsers.
+
+// define two directives to support basic drag and drop
 angular.module('dndApp').directive('draggable', function () {
     var handleDragStart = function (e) {
         e.dataTransfer.effectAllowed = 'move';
